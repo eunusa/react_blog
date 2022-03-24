@@ -8,6 +8,9 @@ import data from './data.js';
 /* src는 이미지 압축한다. */
 /* 부트스트랩 css 파일을 다운받아서 사용해도 된다. */
 /* 원조 리액트 부트스트랩은 원조 class명을 사용해도된다. */
+import { Link, Route, Switch } from 'react-router-dom';
+
+
 function App() {
 
   let [shoes, shoesC] = useState(data);
@@ -37,13 +40,16 @@ function App() {
   </Container>
 </Navbar>
 
-<div class="jumbotron">
-  <h1>Hello, world!</h1>
-  <p>...</p>
-  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
-</div>
-{/* 리액트에 container 클래스가 존재 row. col-md-4 클래스 사용하면 자동으로 공간이 분리 된다. */}
-    <div className="container">
+
+
+<Route exact path="/">
+  <div class="jumbotron">
+    <h1>Hello, world!</h1>
+    <p>...</p>
+    <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+  </div>
+
+  <div className="container">
       <div className="row">
         {
         shoes.map((a,i)=>{
@@ -52,6 +58,29 @@ function App() {
         }       
       </div>
     </div>
+
+
+</Route>
+
+<Route exact path="/detail">
+  <div>상세페이지 입니다.</div>
+  <div className="container">
+      <div className="row">
+        <div className="col-md-6">
+          <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+        </div>
+        <div className="col-md-6 mt-4">
+          <h4 className="pt-5">상품명</h4>
+          <p>상품설명</p>
+          <p>120000원</p>
+          <button className="btn btn-danger">주문하기</button> 
+        </div>
+      </div>
+</div> 
+</Route>
+
+
+{/* 리액트에 container 클래스가 존재 row. col-md-4 클래스 사용하면 자동으로 공간이 분리 된다. */}
 </div>
   );
 }
