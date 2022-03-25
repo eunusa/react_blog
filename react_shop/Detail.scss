@@ -1,0 +1,42 @@
+// @import './reset.scss';
+
+$maincolor : #001;
+
+.red{
+    color: $maincolor;
+}
+
+/* nesting 문법 */
+/* 
+div.container{
+    h4{
+        color: blue;
+    }
+    p{
+        color: green;
+    }
+} */
+@mixin 함수(){
+    background: #eee;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 500px;
+    width:100%;
+    margin:auto;
+}
+
+.my-alert{
+   @include 함수()
+}
+
+.my-alert2{
+    @extend .my-alert;
+    background: #ffeeee;
+}
+
+
+
+
+.my-alert p {
+    margin-bottom: 0;
+}

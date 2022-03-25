@@ -3,17 +3,18 @@ import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import data from './data.js';
+import Detail from './Detail.js';
 /* export 받은 것은 똑같이 중괄호랑 변수를 넣어준다. */
 
 /* src는 이미지 압축한다. */
 /* 부트스트랩 css 파일을 다운받아서 사용해도 된다. */
 /* 원조 리액트 부트스트랩은 원조 class명을 사용해도된다. */
-import { Link, Route, Switch } from 'react-router-dom';
+import { Link, Route, Switch } from 'react-router-dom'; /* Link Route Switch는 항상 대문자로 작성하기. */
 
 
 function App() {
 
-  let [shoes, shoesC] = useState(data);
+  let [shoes, shoesC] = useState(data); /* 중요한 state는 app에다가 저장하는게 국룰 */
 
   
 
@@ -26,8 +27,8 @@ function App() {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
-        <Nav.Link href="#home">Home</Nav.Link>
-        <Nav.Link href="#link">Link</Nav.Link>
+        <Nav.Link ><Link to="home">Home</Link></Nav.Link> {/* Link 컴포넌트 사용한다. */}
+        <Nav.Link ><Link to="Detail">Detail</Link></Nav.Link>
         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -42,7 +43,8 @@ function App() {
 
 
 
-<Route exact path="/">
+
+<Route path="/home">
   <div class="jumbotron">
     <h1>Hello, world!</h1>
     <p>...</p>
@@ -62,23 +64,25 @@ function App() {
 
 </Route>
 
-<Route exact path="/detail">
-  <div>상세페이지 입니다.</div>
-  <div className="container">
-      <div className="row">
-        <div className="col-md-6">
-          <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-        </div>
-        <div className="col-md-6 mt-4">
-          <h4 className="pt-5">상품명</h4>
-          <p>상품설명</p>
-          <p>120000원</p>
-          <button className="btn btn-danger">주문하기</button> 
-        </div>
-      </div>
-</div> 
+<Route path="/detail/:id"> {/* url 파라미터, 아무거나 입력 가능하다. */}
+  
+  <Detail shoes={shoes} />
+ 
+  
+</Route>
+{/* 모듈화라고도 한다. */}
+
+<Route path="/:id">{/* 아무 문자나 보여준다. */}
+  <div>아무거나 보여주세요.</div>
 </Route>
 
+<Route path="/detail2">
+  <div>뭐지 보여주는데..??</div>
+</Route>
+
+
+
+ {/* 중복을 허용하지 않는다. 맨 위에 해당하는것만 보여준다. */}
 
 {/* 리액트에 container 클래스가 존재 row. col-md-4 클래스 사용하면 자동으로 공간이 분리 된다. */}
 </div>
@@ -86,6 +90,11 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
 
 function ShoesList(props){
  return (
