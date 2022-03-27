@@ -25,26 +25,41 @@ let Titlelist = styled.h4`
 function Detail(props){
 
     useEffect(()=>{
-        // let setitemea = setTimeout(()=>{
-        // itemeaC(true);
-        // },2000)
+        let setitemea = setTimeout(()=>{
+        itemeaC(false);
+        },2000)
 
-        return (()=>{})/* 컴포넌트가 사라질때 실행된다. */
+        return ()=>{ clearTimeout(setitemea);}
+
+
+        /* return (()=>{}) *//* 컴포넌트가 사라질때 실행된다. */
         /* useEffect는 순서대로 실행이 된다. */
-    });
+        /* input 랜더링이 일어날때마다 훅이 실행된다. */
+        /* setTimeout은 페이지 이동간에 에러를 발생할 수 있기 때문에 clearTimeout 함수를 통해 에러를 방지해준다.
+        clearTimeout은  타이머가 해제 된다. */
+    },[]);
+        /*[]안에 조건이 들어간다 변수가 실행 될때만 실행시킬 수 있다.조건안에 아무것도 없으면 1번 실행하고 끝난다.  */
 
 
     let { id } = useParams();
     let history = useHistory(); /* 방문기록이 남아있는 히스토리 useHistory 훅 history.push('/') 여길로 이동할수 있다. */
     let idList = data;
-    let [itemea,itemeaC] = useState(false)
+    let [itemea,itemeaC] = useState(true);
+    let [intest,intestC] = useState('');
+    let [intestB,intestBC] = useState('');
 
     return(
     <div className="container">
         <Boxlist>
             <Titlelist className='red' >테스트</Titlelist> {/* props문법 보낼이름={변수명} 보낼이름="일반문자" */}
         </Boxlist>
-        { itemea === true
+
+        <input onChange={(e)=>{intestC(e.target.value)}}/>
+        <button onClick={()=>{intestBC(intest)}}>입력</button>
+        {intestB}
+
+
+        { itemea === false
           ?<Itemeaa />
           : null
         }
