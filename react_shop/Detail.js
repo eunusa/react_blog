@@ -26,7 +26,7 @@ function Detail(props){
 
     useEffect(()=>{
         let setitemea = setTimeout(()=>{
-        itemeaC(false);
+        itemeaC(true);
         },2000)
 
         return ()=>{ clearTimeout(setitemea);}
@@ -73,10 +73,13 @@ function Detail(props){
             <p>{idList[id].price}</p>
             
             
-            <button className="btn btn-danger">주문하기</button> 
+            <button className="btn btn-danger" onClick={()=>{props.inventoryC([1,2,3,])}}>주문하기</button> 
             <button className="btn btn-danger" onClick={()=>{history.goBack();}}>뒤로가기</button> 
         </div>
         </div>
+
+        <Info inventory={props.inventory} />
+
     </div>
 )
 }
@@ -86,4 +89,12 @@ return(<div className='my-alert2'>
             <p>재고가 얼마 남지 않았습니다.</p>
         </div>)
 }
+
+
+function Info(props){
+    return(
+        <p>재고:{props.inventory[0]}</p>
+    )
+}
+
 export default Detail;

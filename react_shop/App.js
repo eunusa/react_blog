@@ -4,19 +4,23 @@ import logo from './logo.svg';
 import './App.css';
 import data from './data.js';
 import Detail from './Detail.js';
+import axios from 'axios';
+
+
+/* axios ajax 라이브러리 */
 /* export 받은 것은 똑같이 중괄호랑 변수를 넣어준다. */
 
 /* src는 이미지 압축한다. */
 /* 부트스트랩 css 파일을 다운받아서 사용해도 된다. */
 /* 원조 리액트 부트스트랩은 원조 class명을 사용해도된다. */
-import { Link, Route, Switch } from 'react-router-dom'; /* Link Route Switch는 항상 대문자로 작성하기. */
+import { Link, Route, Switch } from 'react-router-dom'; /* Link Route Switch는 항상 첫알파뱃을 대문자로 작성하기. */
 
 
 function App() {
 
   let [shoes, shoesC] = useState(data); /* 중요한 state는 app에다가 저장하는게 국룰 */
+  let [inventory,inventoryC] = useState([10,11,12]);
 
-  
 
   return (
     <div className="App">
@@ -27,8 +31,8 @@ function App() {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="me-auto">
-        <Nav.Link ><Link to="home">Home</Link></Nav.Link> {/* Link 컴포넌트 사용한다. */}
-        <Nav.Link ><Link to="Detail">Detail</Link></Nav.Link>
+        <Nav.Link as={Link} to="home">Home</Nav.Link> {/* Link 컴포넌트 사용한다. */}
+        <Nav.Link as={Link} to="Detail">Detail</Nav.Link>
         <NavDropdown title="Dropdown" id="basic-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -44,7 +48,7 @@ function App() {
 
 
 
-<Route path="/home">
+<Route exact path="/"> {/* exact path가 정확할때만 작동 된다. */}
   <div class="jumbotron">
     <h1>Hello, world!</h1>
     <p>...</p>
@@ -59,14 +63,30 @@ function App() {
         }) /* function을 사용안해도 작동이된다. 이전 작업내용을 체크해보자. */
         }       
       </div>
+    
+    <button className='btn btn-primary' onClick={()=>{
+
+      axios.get('https://codingapple1.github.io/shop/data2.json')
+      .then((result)=>{
+        console.log('성공했어요.');
+        shoesC([...shoes, ...result.data]);
+      })
+      .catch(()=>{
+        console.log('실패했어요.');
+      })
+
+    }}>더보기</button>
+    
     </div>
+
+
 
 
 </Route>
 
 <Route path="/detail/:id"> {/* url 파라미터, 아무거나 입력 가능하다. */}
   
-  <Detail shoes={shoes} />
+  <Detail shoes={shoes} inventory={inventory} inventoryC={inventoryC}/>
  
   
 </Route>
