@@ -3,6 +3,8 @@ import { useHistory, useParams } from 'react-router-dom';
 import data from './data.js';
 import styled from 'styled-components';
 import './Detail.scss' ;
+import { Nav } from 'react-bootstrap';
+import { CSSTransition } from 'react-transition-group';
 
 let Boxlist = styled.div`
     padding-top :20px;
@@ -26,7 +28,7 @@ function Detail(props){
 
     useEffect(()=>{
         let setitemea = setTimeout(()=>{
-        itemeaC(true);
+        itemeaC(false);
         },2000)
 
         return ()=>{ clearTimeout(setitemea);}
@@ -47,16 +49,18 @@ function Detail(props){
     let [itemea,itemeaC] = useState(true);
     let [intest,intestC] = useState('');
     let [intestB,intestBC] = useState('');
+    let [pushtab,pushtabC] = useState(0);
+    let [wowB,wowBC] = useState(true);
 
     return(
     <div className="container">
         <Boxlist>
-            <Titlelist className='red' >테스트</Titlelist> {/* props문법 보낼이름={변수명} 보낼이름="일반문자" */}
+            <Titlelist className='red' >{idList[id].title}</Titlelist> {/* props문법 보낼이름={변수명} 보낼이름="일반문자" */}
         </Boxlist>
 
-        <input onChange={(e)=>{intestC(e.target.value)}}/>
+      {/*   <input onChange={(e)=>{intestC(e.target.value)}}/>
         <button onClick={()=>{intestBC(intest)}}>입력</button>
-        {intestB}
+        {intestB} */}
 
 
         { itemea === false
@@ -80,9 +84,38 @@ function Detail(props){
 
         <Info inventory={props.inventory} />
 
-    </div>
-)
+        <Nav className='mt-5' variant="tabs" defaultActiveKey="link-0"> {/* defaultActiveKey 디폴트 탭 입력가능 */}
+            <Nav.Item>
+                <Nav.Link eventKey="link-0" onClick={()=>{pushtabC(0); wowBC(false)}}>Active</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+                <Nav.Link eventKey="link-1" onClick={()=>{pushtabC(1); wowBC(false)}}>Option 2</Nav.Link>
+            </Nav.Item>
+            
+        </Nav>
+
+        <CSSTransition in={wowB} classNames="wow" timeout={500}>
+        <PushtabF pushtab={pushtab} wowBC={wowBC}/>
+        </CSSTransition> 
+     </div>
+    )
 }
+
+function PushtabF(props){
+
+    useEffect(()=>{
+        props.wowBC(true);
+    });
+    /* false에서 true 변할때 애니매이션이 작동 된다.
+    상위 탭 wowBC에서 false을 주고 재 랜더링 되면서 pushtabF를 실행시켜서 애니메이션을 실행한다. */
+
+    if(props.pushtab === 0){
+        return <div> 텝 1입니다.</div>
+    } else if(props.pushtab === 1){
+        return <div> 텝 2입니다.</div>
+    }
+}
+
 
 function Itemeaa(){
 return(<div className='my-alert2'>
