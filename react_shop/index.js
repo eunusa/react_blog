@@ -4,13 +4,20 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { BrowserRouter } from 'react-router-dom' // 라이브러리 이름
+import { BrowserRouter } from 'react-router-dom'; // 라이브러리 이름
+//HashRouter 사용 가능
 
+import {Provider} from 'react-redux';
+import { createStore } from 'redux';
+
+let store = createStore(()=>{return[{id :0, name :'멋진신발', quan :2}]})
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+    <Provider store={store}>
     <App />
+    </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

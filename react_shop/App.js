@@ -5,6 +5,7 @@ import './App.css';
 import data from './data.js';
 import Detail from './Detail.js';
 import axios from 'axios';
+import Cart from './Cart.js';
 
 
 /* axios ajax 라이브러리 */
@@ -87,7 +88,7 @@ function App() {
 <Route path="/detail/:id"> {/* url 파라미터, 아무거나 입력 가능하다. */}
   
   <Detail shoes={shoes} inventory={inventory} inventoryC={inventoryC}/>
- 
+  
   
 </Route>
 {/* 모듈화라고도 한다. */}
@@ -100,7 +101,9 @@ function App() {
   <div>뭐지 보여주는데..??</div>
 </Route>
 
-
+<Route path="/cart">
+  <Cart></Cart>
+</Route>
 
  {/* 중복을 허용하지 않는다. 맨 위에 해당하는것만 보여준다. */}
 
