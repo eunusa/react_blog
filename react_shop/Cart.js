@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import {Table} from "react-bootstrap"
 import {connect} from "react-redux"
+
+
 
 
 function Cart(props){
@@ -16,26 +18,20 @@ function Cart(props){
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>1</td>
-      <td>{props.cartName[0].name}</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>Jacob</td>
-      <td>Thornton</td>
-      <td>@fat</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td colSpan={2}>Larry the Bird</td>
-      <td>@twitter</td>
-    </tr>
+      {
+        props.cartName.map((a,i)=>{
+          return(<tr>
+          <td>{a.id}</td>
+          <td>{a.name}</td>
+          <td>{a.quan}</td>
+          <td><button onClick={()=>{ props.dispatch({type : '수량증가'}) }}>+</button><button onClick={()=>{{ props.dispatch({type : '수량감소'}) } }}>-</button></td>
+          
+          </tr>)
+        })
+      }
   </tbody>
 </Table>
-        </div>
+</div>
     )
 }
 
@@ -43,8 +39,5 @@ function itemCart(state){
   return{
     cartName : state
   }
-
 }
-
-
 export default connect(itemCart)(Cart);
