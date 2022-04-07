@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import './Detail.scss' ;
 import { Nav } from 'react-bootstrap';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 
 let Boxlist = styled.div`
     padding-top :20px;
@@ -77,7 +78,10 @@ function Detail(props){
             <p>{idList[id].price}</p>
             
             
-            <button className="btn btn-danger" onClick={()=>{props.inventoryC([1,2,3,])}}>주문하기</button> 
+            <button className="btn btn-danger" onClick={()=>{props.inventoryC([1,2,3,]);
+            props.dispatch({type:'항목추가',payload : {id:2, name:"새로운상품",quan:1}});
+            history.push('/cart');
+            }}>주문하기</button> 
             <button className="btn btn-danger" onClick={()=>{history.goBack();}}>뒤로가기</button> 
         </div>
         </div>
@@ -86,10 +90,10 @@ function Detail(props){
 
         <Nav className='mt-5' variant="tabs" defaultActiveKey="link-0"> {/* defaultActiveKey 디폴트 탭 입력가능 */}
             <Nav.Item>
-                <Nav.Link eventKey="link-0" onClick={()=>{pushtabC(0); wowBC(false)}}>Active</Nav.Link>
+                <Nav.Link eventKey="link-0" onClick={()=>{pushtabC(0); wowBC(false)}}>제품상세정보</Nav.Link>
             </Nav.Item>
             <Nav.Item>
-                <Nav.Link eventKey="link-1" onClick={()=>{pushtabC(1); wowBC(false)}}>Option 2</Nav.Link>
+                <Nav.Link eventKey="link-1" onClick={()=>{pushtabC(1); wowBC(false)}}>회사정보</Nav.Link>
             </Nav.Item>
             
         </Nav>
@@ -110,9 +114,9 @@ function PushtabF(props){
     상위 탭 wowBC에서 false을 주고 재 랜더링 되면서 pushtabF를 실행시켜서 애니메이션을 실행한다. */
 
     if(props.pushtab === 0){
-        return <div> 텝 1입니다.</div>
+        return <div> 상세정보 공간입니다.</div>
     } else if(props.pushtab === 1){
-        return <div> 텝 2입니다.</div>
+        return <div> 회사정보 공간입니다.</div>
     }
 }
 
@@ -130,4 +134,13 @@ function Info(props){
     )
 }
 
-export default Detail;
+
+function itemCart(state){
+    return{
+      cartName : state.reducer,
+      popup : state.reducer2 //state를 cartName으로 쓰겠습니다.
+    }
+  }
+
+
+export default connect(itemCart)(Detail);

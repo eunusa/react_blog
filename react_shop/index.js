@@ -16,16 +16,22 @@ let popup = true;
 
 function reducer2(state = popup, 액션){
   if(액션.type ==='popUpclose'){
+    
     let popup = state;
     popup = false;
     return popup
   } else {return state}
-} //연습으로 만든거지 useState를 사용해서 하면 짱편한다.
+} //연습으로 만든거지 작은 서비스는 useState를 사용해서 하면 짱편한다.
 
 
 
-function reducer(state = 초기값, 액션){
-  if (액션.type === '수량증가'){
+function reducer(state = 초기값, 액션){ //dipatch()할때 모든 오브젝트
+  if(액션.type==='항목추가'){
+    let copy = [...state];
+    copy.push(액션.payload);
+    return copy
+  }
+  else if (액션.type === '수량증가'){
     let copy = [...state];
     copy[0].quan++;
     return copy
