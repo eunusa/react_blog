@@ -79,7 +79,7 @@ function Detail(props){
             
             
             <button className="btn btn-danger" onClick={()=>{props.inventoryC([1,2,3,]);
-            props.dispatch({type:'항목추가',payload : {id:2, name:"새로운상품",quan:1}});
+            props.dispatch({type:'항목추가',payload : {id:idList[id].id, name:idList[id].title,quan:1}});
             history.push('/cart');
             }}>주문하기</button> 
             <button className="btn btn-danger" onClick={()=>{history.goBack();}}>뒤로가기</button> 
