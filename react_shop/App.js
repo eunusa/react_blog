@@ -1,13 +1,16 @@
 import { Navbar,Container,Nav,NavDropdown } from 'react-bootstrap';
-import { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import data from './data.js';
-import Detail from './Detail.js';
+/* import Detail from './Detail.js'; */
+
+
+
 import axios from 'axios';
 import Cart from './Cart.js';
 
-
+/* lazy, suspense 너무많은 라이브러리를 받아올때 느릴수 있다. 나중에 import하는 것들을 지정할 수 있다. */
 /* axios ajax 라이브러리 */
 /* export 받은 것은 똑같이 중괄호랑 변수를 넣어준다. */
 
@@ -15,7 +18,8 @@ import Cart from './Cart.js';
 /* 부트스트랩 css 파일을 다운받아서 사용해도 된다. */
 /* 원조 리액트 부트스트랩은 원조 class명을 사용해도된다. */
 import { Link, Route, Switch } from 'react-router-dom'; /* Link Route Switch는 항상 첫알파뱃을 대문자로 작성하기. */
-
+import { useHistory } from 'react-router-dom';
+let Detail = React.lazy(()=>import('./Detail.js'));
 
 function App() {
 
@@ -86,9 +90,9 @@ function App() {
 </Route>
 
 <Route path="/detail/:id"> {/* url 파라미터, 아무거나 입력 가능하다. */}
-  
+  <Suspense fallback={<div>로딩중이에요</div>}> {/* lazy 는 suspense를 묶는다. fallback은 로딩이 늦어질때 보여준다.*/}
   <Detail shoes={shoes} inventory={inventory} inventoryC={inventoryC}/>
-  
+  </Suspense>
   
 </Route>
 {/* 모듈화라고도 한다. */}
@@ -120,11 +124,14 @@ export default App;
 
 
 function ShoesList(props){
+
+let history = useHistory();
+
  return (
- <div className="col-md-4">
+ <div className="col-md-4" onClick={()=>{history.push('/detail/'+props.shoes.id)}}>
  <img src={ "https://codingapple1.github.io/shop/shoes"+(props.i+1)+".jpg" } width="100%"></img>
  {/* src에 변수넣으려면 중괄호를 사용하자, props 입력은 소괄호 */}
- <h4>{props.shoes.title}</h4>
+ <h4>{props.shoes.title} </h4>
  <p>{props.shoes.content} {props.shoes.price}</p>
 </div>
 )
