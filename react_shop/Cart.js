@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, memo } from "react";
 import {Table} from "react-bootstrap"
 import {connect, useDispatch, useSelector} from "react-redux"
 
@@ -51,11 +51,32 @@ function Cart(props){
           </div>)
         :null
       } {/* 연습으로 만든거지 작은 서비스는 useState를 사용해서 하면 짱편한다. */}
+      
+      <Parent 이름="존박1" 나이="20" />
+     
 </div>
     )
 }
 
 
+function Parent(props){
+  return (
+      <div>
+          <Child1 이름={props.존박} />
+          <Child2 이름={props.나이} />
+      </div>
+  )
+}
+
+function Child1(){
+  useEffect(()=>{console.log('랜더링됨1')});
+  return<div>1111</div>
+}
+
+let Child2 = memo(function (){
+  useEffect(()=>{console.log('랜더링됨2')});
+  return<div>22222</div>
+})
 /* export default connect(itemCart)(Cart);  */// itemCart, Cart에 redux 연결
 
 export default Cart;
